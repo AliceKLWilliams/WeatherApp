@@ -1,0 +1,81 @@
+*{
+    margin:0;
+
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+html, body{
+    width:100%;
+    height:100%;
+
+    background-image: url(https://images.unsplash.com/photo-1498496294664-d9372eb521f3?auto=format&fit=crop&w=1950&q=80);
+    background-size:cover;
+    background-repeat:no-repeat;
+
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card{
+    background-color: white;
+
+    min-height:40%;
+
+    padding:20px;
+
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    text-align: center;
+
+    box-shadow: 10px 10px 22px -6px rgba(0,0,0,0.33);
+}
+
+.get-weather{
+    margin-bottom:5px;
+}
+
+.get-weather input[type=text]{
+    border:1px solid lightgray;
+    border-radius: 5px;
+    padding:5px;
+    box-sizing: border-box;
+    margin-right: 2%;
+
+
+    width: 75%;
+}
+
+.get-weather input[type=submit]{
+    border:none;
+    box-sizing: border-box;
+    padding:5px;
+    background-color:#ededed;
+    text-align: center;
+    cursor: pointer;
+    width:20%;
+}
+
+.get-weather input[type=text]:focus{
+    outline:none;
+}
+.get-weather input[type=submit]:focus{
+    outline:none;
+}
+
+.card-text{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#place-name-container{
+    max-width: 80%;
+}
+
+#condition{
+    font-size:80px;
+    margin:5px;
+}
