@@ -3,6 +3,7 @@ const displayTemp = document.querySelector("#temp");
 const displayCondition = document.querySelector("#condition");
 const inputForm = document.querySelector(".get-weather");
 const placeSearch = inputForm.querySelector(".place-search");
+const unitBttn = inputForm.querySelector("#units");
 
 const conditionConverter = {
     1: "wi-tornado",
@@ -55,13 +56,21 @@ const conditionConverter = {
     3200:"wi-na"
 }
 
+let isCelcius = true;
+
+function toggleUnits(){
+    const newValue = isCelcius ? "\xB0F" : "\xB0C";
+    units.value = newValue;
+    isCelcius = !isCelcius;
+}
 
 function getWeather(e) {
 
     e.preventDefault();
 
     const placeInput = placeSearch.value;
-    const target = `https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text=%27${placeInput}%27)%20and%20u='c'&format=json`;
+    const unit = isCelcius ? "C" : "F";
+    const target = `https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text=%27${placeInput}%27)%20and%20u='${unit}'&format=json`;
 
     fetch(target)
         .then(response => response.json())
@@ -72,7 +81,7 @@ function getWeather(e) {
             const placeName = dataChannel.location.city + ", " + dataChannel.location.country;
             const conditionCode = dataChannel.item.condition.code;
 
-            displayTemp.textContent = temp + "C";
+            displayTemp.textContent = temp + "\xB0" + unit;
             displayName.textContent = placeName;
 
             console.log(conditionCode);
@@ -98,3 +107,4 @@ function resetDisplay() {
 }
 
 inputForm.addEventListener("submit", getWeather);
+units.addEventListener("click", toggleUnits);
