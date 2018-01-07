@@ -19,9 +19,9 @@ html, body{
 
 .card{
     background-color: white;
+    box-shadow: 10px 10px 22px -6px rgba(0,0,0,0.33);
 
     min-height:40%;
-
     padding:20px;
 
     display:flex;
@@ -29,8 +29,6 @@ html, body{
     justify-content: space-between;
 
     text-align: center;
-
-    box-shadow: 10px 10px 22px -6px rgba(0,0,0,0.33);
 }
 
 .get-weather{
@@ -40,29 +38,38 @@ html, body{
 .get-weather input{
     font-size:20px;
 }
+.get-weather input:focus{
+    outline:none;
+}
 
 .get-weather input[type=text]{
     border:1px solid lightgray;
     border-radius: 5px;
-    padding:5px;
+
     box-sizing: border-box;
-    margin-right: 2%;
 
     width: 65%;
-}
-
-.bttn-search{
-    border:none;
-    box-sizing: border-box;
     padding:5px;
-    background-color:#ededed;
-    text-align: center;
-    cursor: pointer;
-    width:15%;
+    margin-right: 2%;
 }
 
-.get-weather input:focus{
-    outline:none;
+.bttn{
+    background-color:#ededed;
+    border:none;
+
+    box-sizing: border-box;
+    
+    width:15%;
+    padding:5px;
+    
+    text-align: center;
+
+    cursor: pointer;
+}
+
+#condition{
+    font-size:90px;
+    margin:5px;
 }
 
 .card-text{
@@ -73,11 +80,7 @@ html, body{
     font-size:20px;
 }
 
-#place-name-container{
+#name-container{
     max-width: 80%;
-}
-
-#condition{
-    font-size:80px;
-    margin:5px;
+    text-align:left;
 }

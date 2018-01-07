@@ -1,9 +1,9 @@
-const displayName = document.querySelector("#place-name");
+const displayName = document.querySelector("#name");
 const displayTemp = document.querySelector("#temp");
 const displayCondition = document.querySelector("#condition");
 const inputForm = document.querySelector(".get-weather");
-const placeSearch = inputForm.querySelector(".place-search");
-const unitBttn = inputForm.querySelector("#units");
+const placeSearch = inputForm.querySelector("#get-weather-city");
+const unitBttn = inputForm.querySelector("#get-weather-unit");
 
 const conditionConverter = {
     1: "wi-tornado",
@@ -53,14 +53,14 @@ const conditionConverter = {
     45: "wi-storm-showers",
     46: "wi-rain-mix",
     47: "wi-storm-showers",
-    3200:"wi-na"
+    3200: "wi-na"
 }
 
 let isCelcius = true;
 
-function toggleUnits(){
+function toggleUnits() {
     const newValue = isCelcius ? "\xB0F" : "\xB0C";
-    units.value = newValue;
+    unitBttn.value = newValue;
     isCelcius = !isCelcius;
 }
 
@@ -77,27 +77,28 @@ function getWeather(e) {
         .then(data => {
             const dataChannel = data.query.results.channel;
 
-            const temp = dataChannel.item.condition.temp;
+            const temp = dataChannel.item.condition.temp + "\xB0" + unit;
             const placeName = dataChannel.location.city + ", " + dataChannel.location.country;
             const conditionCode = dataChannel.item.condition.code;
 
-            displayTemp.textContent = temp + "\xB0" + unit;
-            displayName.textContent = placeName;
-
-            console.log(conditionCode);
-            if(conditionConverter[conditionCode]){
-                displayCondition.classList.add("wi", conditionConverter[conditionCode]);
-            } else{
-                displayCondition.className = "";
+            if (conditionConverter[conditionCode]) {
+                setDisplay(placeName, temp, conditionCode);
+            } else {
+                setDisplay(placeName, temp, 3200);
             }
         })
         .catch((err) => {
             console.log("Error Getting Data", err);
 
-            resetDisplay();
-
-            displayName.textContent = "Place not found";
+            setDisplay("Place not Found", "??\xB0" + unit, 3200);
         });
+}
+
+function setDisplay(placeName, temperature, iconCode) {
+    displayName.textContent = placeName;
+    displayTemp.textContent = temperature;
+    displayCondition.className = "";
+    displayCondition.classList.add("wi", conditionConverter[iconCode]);
 }
 
 function resetDisplay() {
@@ -107,4 +108,4 @@ function resetDisplay() {
 }
 
 inputForm.addEventListener("submit", getWeather);
-units.addEventListener("click", toggleUnits);
+unitBttn.addEventListener("click", toggleUnits);
