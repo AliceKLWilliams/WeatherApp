@@ -58,10 +58,13 @@ const conditionConverter = {
 
 let isCelcius = true;
 
-function toggleUnits() {
+function toggleUnits(e) {
     const newValue = isCelcius ? "\xB0F" : "\xB0C";
     unitBttn.value = newValue;
+
     isCelcius = !isCelcius;
+
+    getWeather(e);
 }
 
 function getWeather(e) {
@@ -77,7 +80,7 @@ function getWeather(e) {
         .then(data => {
             const dataChannel = data.query.results.channel;
 
-            const temp = dataChannel.item.condition.temp + "\xB0" + unit;
+            const temp = dataChannel.item.condition.temp;
             const placeName = dataChannel.location.city + ", " + dataChannel.location.country;
             const conditionCode = dataChannel.item.condition.code;
 
@@ -90,13 +93,16 @@ function getWeather(e) {
         .catch((err) => {
             console.log("Error Getting Data", err);
 
-            setDisplay("Place not Found", "??\xB0" + unit, 3200);
+            setDisplay("Place not Found", "??", 3200);
         });
 }
 
 function setDisplay(placeName, temperature, iconCode) {
     displayName.textContent = placeName;
-    displayTemp.textContent = temperature;
+
+    const unit = isCelcius ? "C" : "F";
+    displayTemp.textContent = temperature + "\xB0" + unit;
+
     displayCondition.className = "";
     displayCondition.classList.add("wi", conditionConverter[iconCode]);
 }
