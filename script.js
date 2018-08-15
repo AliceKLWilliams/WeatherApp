@@ -63,8 +63,6 @@ function toggleUnits(e) {
     unitBttn.value = newValue;
 
     isCelcius = !isCelcius;
-
-    getWeather(e);
 }
 
 function getWeather(e) {
